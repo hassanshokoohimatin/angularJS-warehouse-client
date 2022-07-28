@@ -1,17 +1,17 @@
-let myApp = angular.module('myApp',[]);
+let categoryDiv = angular.module('categoryDiv', []);
 
-myApp.controller('myCtrl', async ($scope)=>{
+categoryDiv.controller('categoryCtrl', async ($scope)=>{
 
-    let button = document.querySelector('#button')
-        .addEventListener('click', async ()=>{
-            let res = await fetch('http://localhost:8080/');
-            let cat = await res.json();
-            for (category of cat)
-            {
-                let li = document.createElement('li');
-                let ul = document.querySelector('#header')
-                li.textContent = category[2];
-                ul.appendChild(li);
-            }
-        })
+    document.querySelector('#category-btn').addEventListener('click', async ()=>{
+        let categoryPromise = await fetch('http://localhost:8080/');
+        let categories = await categoryPromise.json();
+        let categoryUl = document.querySelector('#category-ul');
+        console.log(categories);
+        for (let category of categories){
+            let li = document.createElement('li');
+            li.innerText = category['code'];
+            categoryUl.appendChild(li);
+        }
+    })
+
 })
